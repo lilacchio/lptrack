@@ -1,0 +1,51 @@
+# Node / pnpm
+node_modules/
+.pnpm-store/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+build/
+.next/
+out/
+.turbo/
+
+# Anchor / Solana
+target/
+.anchor/
+test-ledger/
+*.so
+
+# Rust
+Cargo.lock
+**/*.rs.bk
+
+# Env + secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+keypairs/
+!keypairs/.gitkeep
+
+# IDE + Claude Code
+.vscode/
+.idea/
+.claude/settings.local.json
+*.swp
+.DS_Store
+Thumbs.db
+
+# Test + coverage
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Misc
+*.tsbuildinfo
+.cache/

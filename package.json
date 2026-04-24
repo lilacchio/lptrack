@@ -1,0 +1,25 @@
+{
+  "name": "lp-arena",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LP Arena — PvP Meteora tournaments on Solana",
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:app": "pnpm --filter app dev",
+    "dev:scoring": "pnpm --filter scoring dev",
+    "dev:mcp": "pnpm --filter mcp dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "anchor:build": "cd programs/lp-arena && anchor build",
+    "anchor:test": "cd programs/lp-arena && anchor test",
+    "anchor:deploy": "cd programs/lp-arena && anchor deploy --provider.cluster devnet"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "prettier": "^3.3.3"
+  }
+}
