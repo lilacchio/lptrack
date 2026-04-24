@@ -25,7 +25,7 @@ use errors::ArenaError;
 use events::*;
 use state::*;
 
-declare_id!("LPArenaXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+declare_id!("Hrto23usPNyEYdmpVCVppM37M7vyBFd1sFhfRtTFGEc4");
 
 #[program]
 pub mod lp_arena {

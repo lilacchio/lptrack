@@ -6,10 +6,10 @@ resolution = true
 skip-lint = false
 
 [programs.devnet]
-lp_arena = "LPArenaXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+lp_arena = "Hrto23usPNyEYdmpVCVppM37M7vyBFd1sFhfRtTFGEc4"
 
 [programs.localnet]
-lp_arena = "LPArenaXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+lp_arena = "Hrto23usPNyEYdmpVCVppM37M7vyBFd1sFhfRtTFGEc4"
 
 [registry]
 url = "https://api.apr.dev"

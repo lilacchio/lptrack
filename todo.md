@@ -6,9 +6,9 @@
 
 ## Phase 0 — Foundations (2 days)
 
-- [ ] Install toolchain: Rust, Solana CLI 1.18+, Anchor 0.30.1, pnpm, Node 20+. **(BLOCKED: WSL install — user action)**
-- [ ] `solana-keygen new --outfile ~/.config/solana/id.json`. Save public key. **(BLOCKED: toolchain)**
-- [ ] `solana config set -u devnet`. `solana airdrop 5` (retry if throttled; use https://faucet.solana.com as backup). **(BLOCKED: toolchain)**
+- [x] Install toolchain: Rust 1.95, Solana 1.18.26, avm 1.0.1, anchor 0.30.1, pnpm 9.12.0, Node 20.20.2. (WSL Ubuntu) — **NOTE: Solana 1.18 platform-tools ship rustc 1.75, too old for modern `edition2024` transitive deps. Need to upgrade to Agave 2.x before `anchor build` will work.**
+- [x] `solana-keygen new` — admin pubkey `2eXVwmqhWd8cC5tDydrtHL41z4qPv2jseXi53FXKSVUf`.
+- [x] `solana config set -u devnet`. Airdrop rate-limited on both public devnet + Helius → funding manually via faucet.solana.com.
 - [x] Create monorepo workspace. Root `package.json` with `pnpm-workspace.yaml` covering `app`, `services/*`, `mcp`, `programs/lp-arena`.
 - [x] Commit initial scaffold. `.gitignore` for `target/`, `.anchor/`, `node_modules/`, `.env*`.
 - [x] Create Supabase project (free). Save URL + anon + service keys. **(verified HTTP 200)**
@@ -16,7 +16,10 @@
 - [x] Create Privy app (free dev tier). Note app ID.
 - [x] Confirm LP Agent Premium key works: `curl -H "x-api-key: $K" https://api.lpagent.io/open-api/v1/pools/discover?pageSize=1` **(HTTP 200)**
 - [x] Download `https://docs.lpagent.io/llms.txt` → `specs/ref/lpagent-llms.txt` (offline reference).
-- [ ] Generate Ed25519 keypair for scoring oracle. Save both halves — public to `ArenaConfig`, private to scoring service env. **(BLOCKED: toolchain)**
+- [x] Generate Ed25519 keypair for scoring oracle. Pubkey `E38yZp8haefXLLoUotTXu6VLWsHBjbkPanvuKTbrcRj4`, path `./keypairs/scoring-oracle.json`. Protocol fee vault pubkey `AmKaqUxbmRGV9a9EaNEaHp2QAUh1kbSU9NJZoE1NAdx2`.
+- [x] Admin wallet funded via faucet.solana.com — **10 SOL on devnet**.
+- [x] Generate program keypair. Program ID `Hrto23usPNyEYdmpVCVppM37M7vyBFd1sFhfRtTFGEc4`. Synced into `programs/lp-arena/src/lib.rs` (`declare_id!`) and `Anchor.toml` (devnet + localnet).
+- [ ] **BLOCKED**: `anchor build` fails — Solana 1.18's rustc 1.75 can't parse `edition2024` in transitive crates (`block-buffer 0.12`). WSL also crashed mid-diagnosis with `Wsl/Service/CreateInstance/E_FAIL`. **Action: reboot Windows, then `agave-install init 2.0.x` (or later) to get newer platform-tools, then retry `anchor build`.**
 
 **Exit criteria**: `anchor build` succeeds on the sketch; Supabase + Helius + LP Agent credentials all verified with one curl each.
 
