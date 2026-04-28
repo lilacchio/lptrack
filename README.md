@@ -126,7 +126,7 @@ flowchart LR
 |---|---|
 | **Program** | [`Hrto23usPNyEYdmpVCVppM37M7vyBFd1sFhfRtTFGEc4`](https://explorer.solana.com/address/Hrto23usPNyEYdmpVCVppM37M7vyBFd1sFhfRtTFGEc4?cluster=devnet) |
 | **Config PDA** | [`kKkk8vJXRuPRa88Q7LeKVQs4aWH6D326XidQg3D4Qtg`](https://explorer.solana.com/address/kKkk8vJXRuPRa88Q7LeKVQs4aWH6D326XidQg3D4Qtg?cluster=devnet) — 200 bps protocol fee, oracle `E38yZp8h…` |
-| **Live judging arena** | [`CfUmX84hp7BkuwTVT5gK61kWfp9VCnoKih8m6buv2b9r`](https://explorer.solana.com/address/CfUmX84hp7BkuwTVT5gK61kWfp9VCnoKih8m6buv2b9r?cluster=devnet) — USD1·SOL, ends 2026-05-02, 0.025 SOL entry, 50/30/20 split |
+| **Live judging arena** | [`5h3UD5KMfbHTFB7uPzKBk24GcBurG9QuEraJfFvPaRsJ`](https://explorer.solana.com/address/5h3UD5KMfbHTFB7uPzKBk24GcBurG9QuEraJfFvPaRsJ?cluster=devnet) — SOL·USDC, 0.025 SOL entry, 50/30/20 split, 24h entry + 24h trade window. The spawn cron rotates a fresh arena daily; the homepage's "live arenas" panel always reflects the on-chain set. |
 
 **Three example transactions, one per critical instruction:**
 
