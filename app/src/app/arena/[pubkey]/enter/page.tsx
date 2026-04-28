@@ -3,6 +3,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { notFound } from "next/navigation";
 import { EntryCoachHint } from "@/components/ai/entry-coach-hint";
 import { EntryWizardClient } from "@/components/entry-wizard-client";
+import { PostWizardNext } from "@/components/post-wizard-next";
 import { TokenIcon } from "@/components/token-icon";
 import { fetchArena } from "@/lib/chain/program";
 import { findPoolById, poolInfoTokens } from "@/lib/lpagent/client";
@@ -152,6 +153,8 @@ export default async function EntryWizardPage({
           theme={theme}
         />
       </section>
+
+      <PostWizardNext arenaPubkey={pubkey} />
     </main>
   );
 }
