@@ -34,7 +34,7 @@ flowchart LR
 
     subgraph Edge[" "]
       direction TB
-      N["<b>Next.js 16 · Vercel</b><br/>Tailwind 4 · shadcn<br/>Fraunces · Lenis · motion"]
+      N["<b>Next.js 16 · Vercel</b><br/>Tailwind 4 · shadcn<br/>Fraunces · motion"]
     end
 
     subgraph Chain[" "]
@@ -68,7 +68,7 @@ flowchart LR
 ┌─────────────────────────────┐      ┌─────────────────────────────┐
 │  Next.js 16 (Vercel)        │◀────▶│  Supabase                   │
 │  Tailwind 4 · shadcn        │      │  Postgres + Realtime        │
-│  Fraunces · Lenis · motion  │      │  arenas · entries · scores  │
+│  Fraunces · motion          │      │  arenas · entries · scores  │
 └────────────▲────────────────┘      └──────────────▲──────────────┘
              │                                      │
              │ enter / claim / read arena state     │ upserts from cron

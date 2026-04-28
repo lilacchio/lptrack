@@ -3,7 +3,6 @@ import { Inter_Tight, JetBrains_Mono, Fraunces } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SiteNav } from "@/components/site-nav";
 import { WalletProviders } from "@/components/wallet-providers";
-import { LenisProvider } from "@/components/lenis-provider";
 import { EthereumErrorGuard } from "@/components/ethereum-error-guard";
 import "./globals.css";
 
@@ -39,12 +38,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${mono.variable} ${serif.variable} h-full antialiased`}
+      className={`${sans.variable} ${mono.variable} ${serif.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <EthereumErrorGuard />
-        <LenisProvider />
         <WalletProviders>
           <TooltipProvider>
             <SiteNav />
