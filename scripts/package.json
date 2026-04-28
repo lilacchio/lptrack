@@ -1,0 +1,27 @@
+{
+  "name": "lp-arena-scripts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "init-config": "tsx init-config.ts",
+    "create-test-arena": "tsx create-test-arena.ts",
+    "create-long-arena": "tsx create-long-arena.ts",
+    "full-flow": "tsx full-flow.ts",
+    "apply-supabase-migrations": "tsx apply-supabase-migrations.ts"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@solana/web3.js": "^1.95.4",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.4.5",
+    "pg": "^8.13.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.10",
+    "@types/pg": "^8.11.10",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}

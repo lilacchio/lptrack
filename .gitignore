@@ -49,3 +49,10 @@ test-results/
 # Misc
 *.tsbuildinfo
 .cache/
+
+# Working docs — only README.md ships to the public GitHub remote.
+# All other root-level *.md files and the specs/ folder stay local-only
+# (strategy docs, build plans, deployment runbooks, internal specs).
+/*.md
+!/README.md
+specs/

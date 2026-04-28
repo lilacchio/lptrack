@@ -2,3 +2,8 @@ packages:
   - "app"
   - "services/*"
   - "mcp"
+  - "scripts"
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver

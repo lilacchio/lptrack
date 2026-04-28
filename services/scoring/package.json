@@ -1,0 +1,30 @@
+{
+  "name": "scoring",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "LP Arena scoring + safety + settlement service",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "tick:leaderboard": "tsx src/ticks/leaderboard.ts --once",
+    "tick:safety": "tsx src/ticks/safety.ts --once",
+    "tick:settle": "tsx src/ticks/settle.ts --once",
+    "tick:elo": "tsx src/ticks/elo.ts --once",
+    "tick:spawn": "tsx src/ticks/spawn.ts --once",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@solana/web3.js": "^1.95.4",
+    "@supabase/supabase-js": "^2.45.4",
+    "dotenv": "^16.4.5",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.10",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}

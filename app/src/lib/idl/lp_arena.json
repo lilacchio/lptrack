@@ -1,0 +1,1820 @@
+{
+  "address": "Hrto23usPNyEYdmpVCVppM37M7vyBFd1sFhfRtTFGEc4",
+  "metadata": {
+    "name": "lp_arena",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "LP Arena — PvP Meteora tournaments on Solana"
+  },
+  "instructions": [
+    {
+      "name": "cancel_arena",
+      "discriminator": [
+        104,
+        161,
+        139,
+        47,
+        18,
+        111,
+        92,
+        43
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "arena",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena.config",
+                "account": "Arena"
+              },
+              {
+                "kind": "account",
+                "path": "arena.index",
+                "account": "Arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "reason",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "claim_payout",
+      "discriminator": [
+        127,
+        240,
+        132,
+        62,
+        227,
+        198,
+        146,
+        133
+      ],
+      "accounts": [
+        {
+          "name": "arena",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena.config",
+                "account": "Arena"
+              },
+              {
+                "kind": "account",
+                "path": "arena.index",
+                "account": "Arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "prize_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  122,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_refund",
+      "discriminator": [
+        15,
+        16,
+        30,
+        161,
+        255,
+        228,
+        97,
+        60
+      ],
+      "accounts": [
+        {
+          "name": "arena",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena.config",
+                "account": "Arena"
+              },
+              {
+                "kind": "account",
+                "path": "arena.index",
+                "account": "Arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "prize_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  122,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "entry"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_arena",
+      "discriminator": [
+        174,
+        236,
+        45,
+        61,
+        197,
+        215,
+        149,
+        169
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "arena",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config"
+              },
+              {
+                "kind": "account",
+                "path": "config.arena_count",
+                "account": "ArenaConfig"
+              }
+            ]
+          }
+        },
+        {
+          "name": "prize_vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  122,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "CreateArenaParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "enter_arena",
+      "discriminator": [
+        237,
+        44,
+        241,
+        163,
+        152,
+        39,
+        13,
+        181
+      ],
+      "accounts": [
+        {
+          "name": "arena",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena.config",
+                "account": "Arena"
+              },
+              {
+                "kind": "account",
+                "path": "arena.index",
+                "account": "Arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "prize_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  122,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "position_commitment",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_config",
+      "discriminator": [
+        208,
+        127,
+        21,
+        1,
+        194,
+        190,
+        196,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "protocol_fee_vault"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "scoring_oracle",
+          "type": "pubkey"
+        },
+        {
+          "name": "protocol_fee_bps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "place_wager",
+      "discriminator": [
+        225,
+        163,
+        84,
+        25,
+        21,
+        42,
+        138,
+        30
+      ],
+      "accounts": [
+        {
+          "name": "arena",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena.config",
+                "account": "Arena"
+              },
+              {
+                "kind": "account",
+                "path": "arena.index",
+                "account": "Arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wager",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  97,
+                  103,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              },
+              {
+                "kind": "account",
+                "path": "spectator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "wager_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  97,
+                  103,
+                  101,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "spectator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "predicted_winner",
+          "type": "pubkey"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "settle_arena",
+      "discriminator": [
+        222,
+        130,
+        112,
+        108,
+        20,
+        135,
+        200,
+        13
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "arena",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  114,
+                  101,
+                  110,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena.config",
+                "account": "Arena"
+              },
+              {
+                "kind": "account",
+                "path": "arena.index",
+                "account": "Arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "prize_vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  122,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "arena"
+              }
+            ]
+          }
+        },
+        {
+          "name": "cranker",
+          "signer": true
+        },
+        {
+          "name": "ix_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "payload",
+          "type": {
+            "defined": {
+              "name": "SettlePayload"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_player_stats",
+      "discriminator": [
+        61,
+        85,
+        73,
+        244,
+        51,
+        95,
+        21,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_key"
+        },
+        {
+          "name": "stats",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  116,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player_key"
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "delta_rating",
+          "type": "i32"
+        },
+        {
+          "name": "won_arena",
+          "type": "bool"
+        },
+        {
+          "name": "winnings_delta_lamports",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Arena",
+      "discriminator": [
+        243,
+        215,
+        44,
+        44,
+        231,
+        211,
+        232,
+        168
+      ]
+    },
+    {
+      "name": "ArenaConfig",
+      "discriminator": [
+        9,
+        186,
+        181,
+        145,
+        197,
+        50,
+        33,
+        38
+      ]
+    },
+    {
+      "name": "Entry",
+      "discriminator": [
+        63,
+        18,
+        152,
+        113,
+        215,
+        246,
+        221,
+        250
+      ]
+    },
+    {
+      "name": "PlayerStats",
+      "discriminator": [
+        169,
+        146,
+        242,
+        176,
+        102,
+        118,
+        231,
+        172
+      ]
+    },
+    {
+      "name": "Wager",
+      "discriminator": [
+        3,
+        110,
+        53,
+        190,
+        113,
+        31,
+        230,
+        40
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "ArenaCancelled",
+      "discriminator": [
+        78,
+        72,
+        160,
+        220,
+        199,
+        234,
+        70,
+        227
+      ]
+    },
+    {
+      "name": "ArenaCreated",
+      "discriminator": [
+        93,
+        57,
+        84,
+        96,
+        112,
+        3,
+        148,
+        17
+      ]
+    },
+    {
+      "name": "ArenaSettled",
+      "discriminator": [
+        54,
+        201,
+        162,
+        154,
+        85,
+        183,
+        209,
+        60
+      ]
+    },
+    {
+      "name": "EntryRegistered",
+      "discriminator": [
+        13,
+        87,
+        129,
+        56,
+        232,
+        74,
+        238,
+        233
+      ]
+    },
+    {
+      "name": "PayoutClaimed",
+      "discriminator": [
+        200,
+        39,
+        105,
+        112,
+        116,
+        63,
+        58,
+        149
+      ]
+    },
+    {
+      "name": "WagerPlaced",
+      "discriminator": [
+        11,
+        99,
+        79,
+        96,
+        254,
+        4,
+        72,
+        11
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ArenaNotOpen",
+      "msg": "Arena is not currently accepting entries"
+    },
+    {
+      "code": 6001,
+      "name": "EntryWindowClosed",
+      "msg": "Arena entry window has closed"
+    },
+    {
+      "code": 6002,
+      "name": "ArenaNotStarted",
+      "msg": "Arena has not yet started"
+    },
+    {
+      "code": 6003,
+      "name": "ArenaNotEnded",
+      "msg": "Arena has not yet ended"
+    },
+    {
+      "code": 6004,
+      "name": "ArenaAlreadySettled",
+      "msg": "Arena already settled"
+    },
+    {
+      "code": 6005,
+      "name": "ArenaFull",
+      "msg": "Arena reached max entrants"
+    },
+    {
+      "code": 6006,
+      "name": "BelowMinEntrants",
+      "msg": "Below minimum entrants — arena cancelled, refund available"
+    },
+    {
+      "code": 6007,
+      "name": "DuplicateEntry",
+      "msg": "Duplicate entry — one entry per wallet per arena"
+    },
+    {
+      "code": 6008,
+      "name": "EntryFeeTooLow",
+      "msg": "Entry fee below required amount"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidOracleSignature",
+      "msg": "Invalid oracle signature on scoring results"
+    },
+    {
+      "code": 6010,
+      "name": "ScoreMismatch",
+      "msg": "Score submission does not match registered entrants"
+    },
+    {
+      "code": 6011,
+      "name": "PayoutAlreadyClaimed",
+      "msg": "Payout already claimed"
+    },
+    {
+      "code": 6012,
+      "name": "NotInPrizePositions",
+      "msg": "Wallet did not place in prize positions"
+    },
+    {
+      "code": 6013,
+      "name": "SafetyBreakerTripped",
+      "msg": "Safety circuit breaker tripped — arena cancelled"
+    },
+    {
+      "code": 6014,
+      "name": "MathOverflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6015,
+      "name": "Unauthorized",
+      "msg": "Unauthorized: admin only"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidDistribution",
+      "msg": "Invalid distribution — bps must sum to <= 10000"
+    },
+    {
+      "code": 6017,
+      "name": "WagerWindowClosed",
+      "msg": "Wager window closed — arena already started"
+    }
+  ],
+  "types": [
+    {
+      "name": "Arena",
+      "docs": [
+        "One tournament. PDA seeds = [b\"arena\", config.key(), arena_index.to_le_bytes()]."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "config",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "type": "u64"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool_protocol",
+            "type": {
+              "defined": {
+                "name": "PoolProtocol"
+              }
+            }
+          },
+          {
+            "name": "entry_open_ts",
+            "type": "i64"
+          },
+          {
+            "name": "entry_close_ts",
+            "type": "i64"
+          },
+          {
+            "name": "end_ts",
+            "type": "i64"
+          },
+          {
+            "name": "entry_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "pot_contribution_bps",
+            "docs": [
+              "What fraction of the entry fee goes to the prize pot (rest stays as \"deposit float\" that gets returned on exit).",
+              "For the hackathon demo we keep this simple: the entire entry fee IS the pot contribution;",
+              "players bring their own LP capital (Zap-In amount) separately."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "min_entrants",
+            "type": "u16"
+          },
+          {
+            "name": "max_entrants",
+            "type": "u16"
+          },
+          {
+            "name": "current_entrant_count",
+            "type": "u16"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "ArenaState"
+              }
+            }
+          },
+          {
+            "name": "scoring_metric",
+            "type": {
+              "defined": {
+                "name": "ScoringMetric"
+              }
+            }
+          },
+          {
+            "name": "safety_gate",
+            "type": {
+              "defined": {
+                "name": "SafetyGate"
+              }
+            }
+          },
+          {
+            "name": "distribution",
+            "type": {
+              "defined": {
+                "name": "PrizeDistribution"
+              }
+            }
+          },
+          {
+            "name": "prize_vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "winners",
+            "docs": [
+              "Set at settlement. Index i holds the wallet that placed rank (i+1)."
+            ],
+            "type": {
+              "array": [
+                "pubkey",
+                10
+              ]
+            }
+          },
+          {
+            "name": "total_prize_pot",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_taken",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ArenaCancelled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "arena",
+            "type": "pubkey"
+          },
+          {
+            "name": "reason",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ArenaConfig",
+      "docs": [
+        "Global config. One per deployment. PDA seeds = [b\"config\"]."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "scoring_oracle",
+            "docs": [
+              "Ed25519 pubkey of the off-chain scoring oracle. Used to verify score",
+              "submissions via the Ed25519 sigverify program in settle_arena."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "docs": [
+              "Protocol fee taken from prize pot, in bps."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "protocol_fee_vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          },
+          {
+            "name": "arena_count",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ArenaCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "arena",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "start_ts",
+            "type": "i64"
+          },
+          {
+            "name": "end_ts",
+            "type": "i64"
+          },
+          {
+            "name": "entry_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "max_entrants",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ArenaSettled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "arena",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_prize_pot",
+            "type": "u64"
+          },
+          {
+            "name": "winner_count",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ArenaState",
+      "repr": {
+        "kind": "rust"
+      },
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Settling"
+          },
+          {
+            "name": "Completed"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateArenaParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool_protocol",
+            "type": {
+              "defined": {
+                "name": "PoolProtocol"
+              }
+            }
+          },
+          {
+            "name": "entry_open_ts",
+            "type": "i64"
+          },
+          {
+            "name": "entry_close_ts",
+            "type": "i64"
+          },
+          {
+            "name": "end_ts",
+            "type": "i64"
+          },
+          {
+            "name": "entry_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "pot_contribution_bps",
+            "type": "u16"
+          },
+          {
+            "name": "min_entrants",
+            "type": "u16"
+          },
+          {
+            "name": "max_entrants",
+            "type": "u16"
+          },
+          {
+            "name": "scoring_metric",
+            "type": {
+              "defined": {
+                "name": "ScoringMetric"
+              }
+            }
+          },
+          {
+            "name": "safety_gate",
+            "type": {
+              "defined": {
+                "name": "SafetyGate"
+              }
+            }
+          },
+          {
+            "name": "distribution",
+            "type": {
+              "defined": {
+                "name": "PrizeDistribution"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Entry",
+      "docs": [
+        "One player's entry in an arena. PDA seeds = [b\"entry\", arena.key(), player.key()]."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "arena",
+            "type": "pubkey"
+          },
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "entrant_index",
+            "type": "u16"
+          },
+          {
+            "name": "entry_ts",
+            "type": "i64"
+          },
+          {
+            "name": "deposit_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "pot_contribution_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "position_commitment",
+            "docs": [
+              "Hash of (pool, player, position_id) as reported by off-chain scorer — commit-reveal style.",
+              "The off-chain scorer treats this wallet's Meteora positions for this pool as their arena entry."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "final_rank",
+            "type": "u8"
+          },
+          {
+            "name": "final_score",
+            "type": "i64"
+          },
+          {
+            "name": "payout_claimed",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EntryRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "arena",
+            "type": "pubkey"
+          },
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "deposit_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "pot_contribution_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "entrant_index",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PayoutClaimed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "arena",
+            "type": "pubkey"
+          },
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "rank",
+            "type": "u8"
+          },
+          {
+            "name": "amount_lamports",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlayerStats",
+      "docs": [
+        "Lifetime stats per wallet. PDA seeds = [b\"stats\", player.key()]."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "elo_rating",
+            "type": "u32"
+          },
+          {
+            "name": "arenas_played",
+            "type": "u32"
+          },
+          {
+            "name": "arenas_won",
+            "type": "u32"
+          },
+          {
+            "name": "lifetime_pot_winnings_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "last_updated_ts",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoolProtocol",
+      "repr": {
+        "kind": "rust"
+      },
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "MeteoraDlmm"
+          },
+          {
+            "name": "MeteoraDammV2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PrizeDistribution",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bps",
+            "docs": [
+              "Payout bps per rank, index 0 = 1st place. Must sum to <= 10000."
+            ],
+            "type": {
+              "array": [
+                "u16",
+                10
+              ]
+            }
+          },
+          {
+            "name": "winner_count",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RankedEntrant",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "score",
+            "docs": [
+              "Score × 1e6 fixed point (e.g. DPR 0.042 → 42_000)."
+            ],
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SafetyGate",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "min_organic_score_bps",
+            "docs": [
+              "Minimum `organic_score` from LP Agent pool metadata (0..10000 bps)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "require_mint_freeze",
+            "docs": [
+              "If set, require mint_freeze=true on both pool tokens."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "max_top_holder_bps",
+            "docs": [
+              "Max top-holder concentration allowed, in bps. 10000 = no cap."
+            ],
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ScoringMetric",
+      "repr": {
+        "kind": "rust"
+      },
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "DprNative"
+          },
+          {
+            "name": "PnlNative"
+          },
+          {
+            "name": "RoiNative"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SettlePayload",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "end_ts",
+            "docs": [
+              "Must match arena.end_ts."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "ranked",
+            "docs": [
+              "Ranked finalists, rank = index (0-based → rank 1 is first).",
+              "Length must be <= arena.distribution.winner_count."
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "RankedEntrant"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wager",
+      "docs": [
+        "Optional spectator wager. PDA seeds = [b\"wager\", arena.key(), spectator.key()]."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "arena",
+            "type": "pubkey"
+          },
+          {
+            "name": "spectator",
+            "type": "pubkey"
+          },
+          {
+            "name": "predicted_winner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "placed_ts",
+            "type": "i64"
+          },
+          {
+            "name": "claimed",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WagerPlaced",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "arena",
+            "type": "pubkey"
+          },
+          {
+            "name": "spectator",
+            "type": "pubkey"
+          },
+          {
+            "name": "predicted_winner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount_lamports",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}

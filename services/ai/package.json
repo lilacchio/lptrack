@@ -1,0 +1,23 @@
+{
+  "name": "ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "LP Arena AI layer — OpenRouter client + structured-output callers (coach/rivals/recap/safety)",
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schemas": "./src/schemas.ts",
+    "./coach": "./src/coach.ts",
+    "./rivals": "./src/rivals.ts",
+    "./recap": "./src/recap.ts",
+    "./safety": "./src/safety.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.10",
+    "typescript": "^5.6.3"
+  }
+}

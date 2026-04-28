@@ -394,7 +394,7 @@ pub mod lp_arena {
         let stats = &mut ctx.accounts.stats;
         if stats.arenas_played == 0 && stats.elo_rating == 0 {
             stats.elo_rating = PlayerStats::INITIAL_ELO;
-            stats.player = ctx.accounts.player_key;
+            stats.player = ctx.accounts.player_key.key();
             stats.bump = ctx.bumps.stats;
         }
         stats.elo_rating = (stats.elo_rating as i64 + delta_rating as i64).max(0) as u32;
