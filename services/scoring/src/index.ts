@@ -26,13 +26,15 @@ function schedule(t: TickDef) {
     } catch (e) {
       err(t.name, "tick threw", e);
     } finally {
-      setTimeout(loop, t.everyMs).unref();
+      // Keep the timer reffed — `.unref()` would let the process exit as soon
+      // as main() returns (which is exactly what we don't want for a daemon).
+      setTimeout(loop, t.everyMs);
     }
   };
   // Stagger initial fires so all four ticks don't hit Supabase at the same
   // millisecond on cold start.
   const delay = Math.floor(Math.random() * 2_000);
-  setTimeout(loop, delay).unref();
+  setTimeout(loop, delay);
   log("index", `scheduled ${t.name} every ${t.everyMs}ms (first +${delay}ms)`);
 }
 
