@@ -54,7 +54,18 @@ export async function safetyTick(): Promise<void> {
       }
 
       const organicBps = Math.round(((pool.organic_score ?? 0) as number) * 100);
-      const topHolderBps = Math.round(((pool.top_holder ?? 0) as number) * 100);
+      // LP Agent's `top_holder` field is inconsistently scaled across pools —
+      // some return a clean percentage (e.g., 18 = 18%), others return a
+      // 5-decimal-scaled value (e.g., 3820662 ~= 38.2% with 5 decimals). When
+      // the raw number is > 100 (no real percentage exceeds that), we can't
+      // trust the unit, so we treat it as unknown and skip the top-holder
+      // breach instead of cancelling on a parsing artefact. Real high
+      // concentration would still need to be flagged via a different signal.
+      const topHolderRaw = Number(pool.top_holder ?? 0);
+      const topHolderTrusted = topHolderRaw >= 0 && topHolderRaw <= 100;
+      const topHolderBps = topHolderTrusted
+        ? Math.round(topHolderRaw * 100)
+        : 0;
       const minOrganic = gate.minOrganicScoreBps ?? 0;
       const maxTop = gate.maxTopHolderBps ?? 10_000;
       const mintFreezeOk = gate.requireMintFreeze ? pool.mint_freeze === true : true;
@@ -73,6 +84,8 @@ export async function safetyTick(): Promise<void> {
       warn("safety", `arena ${arenaPubkeyStr} BREACHED — cancelling`, {
         organicBps,
         topHolderBps,
+        topHolderRaw,
+        topHolderTrusted,
         mintFreezeOk,
       });
 
