@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getRecap, type RecapInput } from "ai/recap";
+import { getRecap, type RecapInput } from "@/lib/ai/recap";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

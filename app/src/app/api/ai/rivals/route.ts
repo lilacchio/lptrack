@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getRivalSummary, type RivalInput } from "ai/rivals";
+import { getRivalSummary, type RivalInput } from "@/lib/ai/rivals";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

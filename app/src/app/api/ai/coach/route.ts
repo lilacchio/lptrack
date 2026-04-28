@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCoachSuggestion, type CoachInput } from "ai/coach";
+import { getCoachSuggestion, type CoachInput } from "@/lib/ai/coach";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

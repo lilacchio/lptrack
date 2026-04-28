@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSafetyInspection, type SafetyInput } from "ai/safety";
+import { getSafetyInspection, type SafetyInput } from "@/lib/ai/safety";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
