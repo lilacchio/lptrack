@@ -38,15 +38,26 @@ async function lpagentFetch<T>(
 ): Promise<T> {
   const { base, key } = lpagentEnv();
   const url = `${base}/open-api/v1${path}`;
-  const res = await fetch(url, {
-    ...init,
-    headers: {
-      "x-api-key": key,
-      accept: "application/json",
-      ...(init?.headers ?? {}),
-    },
-    next: { revalidate: init?.revalidate ?? 60 },
-  });
+  const fetchOnce = async () =>
+    fetch(url, {
+      ...init,
+      headers: {
+        "x-api-key": key,
+        accept: "application/json",
+        ...(init?.headers ?? {}),
+      },
+      next: { revalidate: init?.revalidate ?? 60 },
+    });
+
+  let res = await fetchOnce();
+  // Single backoff retry on 429 — burst of cold-reloads in dev (and the
+  // occasional production spike) trips LP Agent's rate limiter; the second
+  // attempt usually lands in cache. Stays a single retry so we don't pile on.
+  if (res.status === 429) {
+    const retryAfter = Number(res.headers.get("retry-after") ?? "1");
+    await new Promise((r) => setTimeout(r, Math.min(2000, retryAfter * 1000)));
+    res = await fetchOnce();
+  }
   if (!res.ok) {
     throw new Error(`LP Agent ${res.status} ${res.statusText} on ${path}`);
   }

@@ -32,6 +32,178 @@ const ACCENT_RING: Record<string, string> = {
 
 type StepStatus = "pending" | "ready" | "running" | "done" | "error";
 
+type ArenaLifecycle =
+  | "pending"
+  | "entry_open"
+  | "live"
+  | "settling"
+  | "settled"
+  | "cancelled";
+
+const ARENA_STATE_NUM_TO_NAME: Record<number, string> = {
+  0: "Pending",
+  1: "Active",
+  2: "Settling",
+  3: "Completed",
+  4: "Cancelled",
+};
+
+function readEnumName(v: unknown): string {
+  if (typeof v === "number") return ARENA_STATE_NUM_TO_NAME[v] ?? "Pending";
+  if (typeof v === "object" && v !== null) {
+    const k = Object.keys(v as Record<string, unknown>)[0] ?? "pending";
+    return k.charAt(0).toUpperCase() + k.slice(1);
+  }
+  return "Pending";
+}
+
+function deriveLifecycle(arena: ArenaAccount): ArenaLifecycle {
+  const state = readEnumName(arena.state);
+  const nowSec = Math.floor(Date.now() / 1000);
+  const entryOpenTs = Number(arena.entryOpenTs);
+  const entryCloseTs = Number(arena.entryCloseTs);
+  const endTs = Number(arena.endTs);
+  if (state === "Cancelled") return "cancelled";
+  if (state === "Completed") return "settled";
+  if (state === "Settling") return "settling";
+  if (state === "Active") {
+    if (nowSec < entryCloseTs) return "entry_open";
+    if (nowSec < endTs) return "live";
+    return "settling";
+  }
+  // Pending
+  if (nowSec < entryOpenTs) return "pending";
+  if (nowSec < entryCloseTs) return "entry_open";
+  if (nowSec < endTs) return "live";
+  return "settling";
+}
+
+function fmtCountdown(targetSec: number): string {
+  const delta = targetSec - Math.floor(Date.now() / 1000);
+  if (delta <= 0) return "any moment";
+  const d = Math.floor(delta / 86400);
+  const h = Math.floor((delta % 86400) / 3600);
+  const m = Math.floor((delta % 3600) / 60);
+  if (d > 0) return `${d}d ${h}h`;
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
+}
+
+function LifecycleHint({
+  lifecycle,
+  arenaPubkey,
+  entryOpenTs,
+  entryCloseTs,
+  endTs,
+  theme,
+}: {
+  lifecycle: ArenaLifecycle;
+  arenaPubkey: string;
+  entryOpenTs: number;
+  entryCloseTs: number;
+  endTs: number;
+  theme: keyof typeof ACCENT_BG;
+}) {
+  const accent = ACCENT_TEXT[theme];
+
+  const config: {
+    title: string;
+    body: React.ReactNode;
+    cta?: { label: string; href: string };
+  } = (() => {
+    switch (lifecycle) {
+      case "pending":
+        return {
+          title: "Entry hasn't opened yet.",
+          body: (
+            <>
+              The entry window opens in{" "}
+              <strong className={accent}>{fmtCountdown(entryOpenTs)}</strong>.
+              Come back then to claim a spot — first-come-first-served until
+              the seat cap fills.
+            </>
+          ),
+        };
+      case "live":
+        return {
+          title: "Entry window has closed.",
+          body: (
+            <>
+              This arena moved into its live trading window — entries are
+              locked for everyone now. The bell rings in{" "}
+              <strong className={accent}>{fmtCountdown(endTs)}</strong>; watch
+              the field on the leaderboard.
+            </>
+          ),
+          cta: { label: "Live leaderboard →", href: `/arena/${arenaPubkey}` },
+        };
+      case "settling":
+        return {
+          title: "Settlement is in progress.",
+          body: (
+            <>
+              The arena ended at{" "}
+              {new Date(endTs * 1000).toUTCString()}. The scoring oracle is
+              building + signing the final ranks — the on-chain settle tx
+              usually lands within ~5 minutes after end_ts.
+            </>
+          ),
+          cta: { label: "Live leaderboard →", href: `/arena/${arenaPubkey}` },
+        };
+      case "settled":
+        return {
+          title: "Arena has settled.",
+          body: (
+            <>
+              Final ranks are on-chain. If you finished top-3 you can claim
+              your share of the pot from the claim page.
+            </>
+          ),
+          cta: { label: "Claim payout →", href: `/arena/${arenaPubkey}/claim` },
+        };
+      case "cancelled":
+        return {
+          title: "Arena was cancelled.",
+          body: (
+            <>
+              The safety watcher (or admin) cancelled this arena before
+              settlement — every entrant can claim a full refund of their
+              entry fee. No skill loss, no ranking impact.
+            </>
+          ),
+          cta: { label: "Claim refund →", href: `/arena/${arenaPubkey}/claim` },
+        };
+      default:
+        return {
+          title: "Entry isn't accepting wallets.",
+          body: <>This arena isn't currently in its entry window.</>,
+        };
+    }
+  })();
+
+  return (
+    <div className="flex flex-col gap-3">
+      <p className="text-sm">
+        <strong className="text-foreground">{config.title}</strong>{" "}
+        <span className="text-muted-foreground">{config.body}</span>
+      </p>
+      <div className="flex items-center gap-3 pt-1 text-xs">
+        <span className={`font-mono uppercase tracking-[0.2em] ${accent}`}>
+          window: {new Date(entryOpenTs * 1000).toLocaleDateString()} → {new Date(entryCloseTs * 1000).toLocaleDateString()}
+        </span>
+        {config.cta && (
+          <a
+            href={config.cta.href}
+            className={`font-mono uppercase tracking-[0.2em] ${accent} hover:underline`}
+          >
+            {config.cta.label}
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export type EntryWizardClientProps = {
   pubkey: string;
   pool: {
@@ -197,7 +369,10 @@ export function EntryWizardClient({
         message?: string;
       };
       if (buildJson.status !== "success" || !buildJson.data) {
-        throw new Error(buildJson.message ?? "Zap-In build failed");
+        throw new Error(
+          (buildJson.message ? buildJson.message + " — " : "") +
+            "LP Agent couldn't build an add-liquidity tx for this pool right now (often happens on very-low-TVL pairs where the swap router can't quote). Your on-chain entry from Step 2 already counts — you're in the arena. You can add liquidity manually on Meteora, or enter a different arena.",
+        );
       }
       const swapTxs = (buildJson.data.swapTxs ?? []).map(deserializeTx);
       const addTxs = (buildJson.data.addLiquidityTxs ?? []).map(deserializeTx);
@@ -240,15 +415,23 @@ export function EntryWizardClient({
     ? (Number(arena.entryFeeLamports) / 1e9).toFixed(3)
     : null;
 
+  // Derive lifecycle from on-chain state + timestamps so the wizard can
+  // refuse the entry sign click when the entry window has already closed
+  // (instead of letting the program reject with custom error 6001).
+  const lifecycle: ArenaLifecycle = arena ? deriveLifecycle(arena) : "pending";
+  const entryOpen = lifecycle === "entry_open";
+
   const step1: StepStatus = "done";
   const step2Live = !arenaLoading && Boolean(arena);
   const step2Effective: StepStatus = step2Live
     ? step2Status === "pending"
-      ? "ready"
+      ? entryOpen
+        ? "ready"
+        : "pending"
       : step2Status
     : "pending";
   const step3Effective: StepStatus =
-    step2Status === "done"
+    step2Status === "done" && entryOpen
       ? step3Status === "pending"
         ? "ready"
         : step3Status
@@ -274,6 +457,15 @@ export function EntryWizardClient({
           </p>
         ) : !arena ? (
           <NoArenaHint pubkey={pubkey} />
+        ) : !entryOpen ? (
+          <LifecycleHint
+            lifecycle={lifecycle}
+            arenaPubkey={pubkey}
+            entryOpenTs={Number(arena.entryOpenTs)}
+            entryCloseTs={Number(arena.entryCloseTs)}
+            endTs={Number(arena.endTs)}
+            theme={theme}
+          />
         ) : !publicKey ? (
           <div className="flex flex-col gap-4">
             <p className="text-sm text-muted-foreground">

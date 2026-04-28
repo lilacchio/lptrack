@@ -159,4 +159,22 @@
   html {
     @apply font-sans;
   }
+
+  /* Lenis 1.x integration. Lenis adds the `.lenis` class to <html> when it
+     mounts; without these rules the document height stays capped to the
+     viewport and scroll silently breaks. The second rule disables CSS
+     scroll-behavior so Lenis's easing isn't fighting the browser's. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
 }

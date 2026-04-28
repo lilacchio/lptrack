@@ -339,7 +339,10 @@ async function safeTopPools() {
   try {
     return await topPoolsByTvl(8);
   } catch (err) {
-    console.error("[home] topPoolsByTvl failed:", err);
+    // Warn (not error) so transient 429s / network blips don't dominate the
+    // dev overlay. Page degrades gracefully to "no pools" — the rest of the
+    // home (live arenas, archive, copy) still renders.
+    console.warn("[home] topPoolsByTvl failed:", (err as Error).message);
     return [];
   }
 }
@@ -349,7 +352,7 @@ async function safeListArenas() {
     const conn = new Connection(RPC, "confirmed");
     return await listArenas(conn);
   } catch (err) {
-    console.error("[home] listArenas failed:", err);
+    console.warn("[home] listArenas failed:", (err as Error).message);
     return [];
   }
 }
