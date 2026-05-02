@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ConnectButton } from "@/components/connect-button";
 
 const NAV_LINKS = [
@@ -9,7 +12,16 @@ const NAV_LINKS = [
   { href: "/faq", label: "FAQ" },
 ] as const;
 
+// Routes that own the full viewport — the deck is its own presentation
+// surface and should not render the site chrome.
+const CHROMELESS_ROUTES = ["/deck"];
+
 export function SiteNav() {
+  const pathname = usePathname();
+  if (CHROMELESS_ROUTES.some((r) => pathname === r || pathname.startsWith(`${r}/`))) {
+    return null;
+  }
+
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-3">
