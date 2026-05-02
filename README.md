@@ -6,9 +6,9 @@
 
 Meteora LP performance, scored live by LP Agent, on a Solana prize-pot Anchor program.
 
-**[lp-arena.vercel.app](https://lp-arena.vercel.app)** &nbsp;·&nbsp; **[60-second walkthrough →](https://youtu.be/lp-arena)**
+**[lp-arena.vercel.app](https://lp-arena.vercel.app)** &nbsp;·&nbsp; **[60-second walkthrough ↗](https://lp-arena.vercel.app/lp-arena-reel.mp4)** &nbsp;·&nbsp; **[Submission deck ↗](https://lp-arena.vercel.app/deck)**
 
-<sub>_Live URL + video link land here on submission day. Devnet proofs and full source ship now._</sub>
+<sub>_No login required to view. Wallet only needed to enter an arena._</sub>
 
 </div>
 

@@ -58,3 +58,13 @@ test-results/
 specs/
 
 .vercel
+
+# Local-only video pipeline (Remotion + Playwright captures + ElevenLabs audio).
+# Final exported MP4 lives elsewhere (YouTube unlisted / Vercel asset) and is
+# linked from the README — the source project doesn't need to ship.
+/video/
+
+# Local-only deck preview artifacts
+/deck-preview-*.png
+/app/snap-deck.mjs
+
